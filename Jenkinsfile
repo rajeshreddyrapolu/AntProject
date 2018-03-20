@@ -11,5 +11,10 @@ pipeline {
         sh 'sh deploy.sh'
       }
     }
+    stage('test') {
+      steps {
+        sh 'echo rajesh'
+      }
+    }
   }
 }

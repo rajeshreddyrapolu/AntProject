@@ -25,7 +25,7 @@
 			<classes dir="build/classes"/>
 		</war>
 	</target>
-	<target name="buildAndDeploy" depends="buildWar">
+	<target name="buildAndDeploy" depends="war">
 	  <deploy url="http://ec2-54-173-114-74.compute-1.amazonaws.com:8080"
 			  username="admin"
 			  password="admin"

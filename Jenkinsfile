@@ -3,17 +3,12 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'ant -f build.xml'
+        sh '/opt/apache-ant-1.10.2/bin/ant -f build.xml'
       }
     }
     stage('Deploy') {
       steps {
         sh 'sh deploy.sh'
-      }
-    }
-    stage('test') {
-      steps {
-        sh 'echo rajesh'
       }
     }
   }

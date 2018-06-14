@@ -21,7 +21,8 @@
 	<target name="war" depends="compile">
 		<property name="env" value="dev"/>
 		<property name="ver" value="1.0.0"/>
-		<war destfile="dist/AntExample-${env}-${ver}.war" webxml="WebContent/WEB-INF/web.xml">
+		<property name="buildNumber" value="1"/>
+		<war destfile="dist/AntExample-${env}-${ver}-${buildNumber}.war" webxml="WebContent/WEB-INF/web.xml">
 			<fileset dir="WebContent"/>
 			<lib dir="WebContent/WEB-INF/lib"/>
 			<classes dir="build/classes"/>

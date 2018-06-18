@@ -37,6 +37,21 @@
 			  war="file:dist/AntExample.war" />
 	</target>
 -->
+	<target name="unpack-tomcat" >
+	</target>
+	<target name="stage-tomcat" depends="war">	
+		<echo message="Staging Tomcat Started" />
+		<echo message="Unpacking Tomcat zip" />
+		<delete dir="stage-tomcat/tomcat" />
+		<delete dir="stage-tomcat/tomcat" />
+		<mkdir dir="stage-tomcat/tomcat" />
+		<unzip src="softwares/tomcat.zip" dest="stage-tomcat/tomcat" />
+		<copy todir="softwares/tomcat/web-apps/">
+			<fileset dir="dist" includes="AntExample-${env}-${ver}-${buildNumber}.war" />
+		</copy>
+		<zip destfile="stage-tomcat/tomcat.zip" basedir="stage-tomcat/tomcat" />
+		<echo message="Staging Tomcat has been Completed" />
+	</target>
 	<target name="clean">
 		<delete dir="dist" />
 		<delete dir="build" />

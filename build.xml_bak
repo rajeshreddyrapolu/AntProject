@@ -1,0 +1,59 @@
+<?xml version="1.0" ?> 
+<project name="AntExample1" default="war">
+	<property name="env" value="dev"/>
+	<property name="ver" value="1.0.0"/>
+	<property name="buildNumber" value="1"/>
+	<path id="compile.classpath">
+		<fileset dir="WebContent/WEB-INF/lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="init" depends="clean">
+		<mkdir dir="build/classes"/>
+		<mkdir dir="dist" />
+	</target>
+	
+	<target name="compile" depends="init" >
+		<javac destdir="build/classes" debug="true" srcdir="src">
+			<classpath refid="compile.classpath"/>
+		</javac>
+	</target>
+	
+	<target name="war" depends="compile">
+		<war destfile="dist/AntExample-${env}-${ver}-${buildNumber}.war" webxml="WebContent/WEB-INF/web.xml">
+			<fileset dir="WebContent"/>
+			<lib dir="WebContent/WEB-INF/lib"/>
+			<classes dir="build/classes"/>
+		</war>
+	</target>
+<!--	<target name="buildAndDeploy" depends="war">
+	  <deploy url="http://ec2-54-173-114-74.compute-1.amazonaws.com:8080"
+			  username="admin"
+			  password="admin"
+			  path="dist/AntExample.war"
+			  update="true"
+			  war="file:dist/AntExample.war" />
+	</target>
+-->
+	<target name="unpack-tomcat" >
+	</target>
+	<target name="stage-tomcat" depends="war">	
+		<echo message="Staging Tomcat Started" />
+		<echo message="Unpacking Tomcat zip" />
+		<delete dir="stage-tomcat" />
+		<delete dir="stage-tomcat/tomcat" />
+		<mkdir dir="stage-tomcat/tomcat" />
+		<unzip src="softwares/tomcat.zip" dest="stage-tomcat/" />
+		<copy file="dist/AntExample-${env}-${ver}-${buildNumber}.war" tofile="stage-tomcat/tomcat/webapps/AntExample.war"/>
+		<zip destfile="stage-tomcat/tomcat.zip" basedir="stage-tomcat/tomcat" />
+		<delete dir="stage-tomcat/tomcat" />
+		<echo message="Staging Tomcat has been Completed" />
+	</target>
+	<target name="clean">
+		<delete dir="dist" />
+		<delete dir="build" />
+		<delete dir="stage-tomcat" />
+	</target>
+	
+</project>
